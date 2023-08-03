@@ -18,7 +18,7 @@ ACLs protect the integrity of application and data running on consul. With the h
 
 ## Understanding the Work Flow.
 
-image.png
+
 
 
 ## Demo Steps:
@@ -28,23 +28,25 @@ image.png
 ** Also the consul/service/sidecar configs may be populated with Old tokens. Please replace them with newly generated tokens from Vault.
 
 * Download the lab from git repo : 
-`git clone `
-* cd <DIR>
+`git clone https://github.com/amitchahalgits/Vault_managed_Consul_ACLs.git`
+
+* cd Vault_managed_Consul_ACLs
+
 * Run Docker-compose: 
 `docker-compose up -d`
+
 * Jump to server, and validate health : 
 `consul members` , `consul acl token read -self`
-* Create a policy for ACL tokens to be used by nodes and services : 
 
-```node_prefix "" {
+* Create a policy for ACL tokens to be used by nodes and services : 
+```
+node_prefix "" {
   policy = "write"
   }
 service_prefix "" {
   policy = "write"
 }
-
-
-
+```
 * Write Policy to Consul: 
 `consul acl policy create -name consul-servers -rules @server_policy.hcl`
 
@@ -58,10 +60,10 @@ service_prefix "" {
 `vault write consul/config/access address=${CONSUL_HTTP_ADDR} token=${CONSUL_HTTP_TOKEN}`
 
 * Creating a Vault role, and Validating vaults policy and roles :
-`vault write consul/roles/consul-server-role policies=consul-servers`
-`vault list consul/roles`
- `vault read consul/roles/consul-server-role`
- `vault policy list`
+`vault write consul/roles/consul-server-role policies=consul-servers`, 
+`vault list consul/roles`,
+`vault read consul/roles/consul-server-role`,
+`vault policy list`
 
 * Generating Tokens from Vault:
 `vault read consul/creds/consul-server-role`
@@ -78,7 +80,7 @@ On Consul nodes: `consul acl set-agent-token agent <token>`
 
 OR
 
-tokens {
+>tokens {
      agent = "2ab9800f-3b6e-f557-1642-76e9480d03b4"
   }
 
@@ -90,6 +92,7 @@ Follow the similar process for generating tokens from vault and applying on serv
 
 Example : Service definition config :
 
+```
 service {
   name = "counting"
   port = 9003
@@ -106,6 +109,7 @@ service {
     timeout  = "1s"
   }
 }
+```
 
 
 And Envoy command example: `consul connect envoy -sidecar-for=counting -token <TOKEN> -- -l debug`
@@ -117,3 +121,5 @@ And Envoy command example: `consul connect envoy -sidecar-for=counting -token <T
 * ACL tokens rotation needs to be done by operator by generating new tokns from Vault, Autiomated rotation is not available in Vault at the moment
 
 * ACL tokens TTL is not modifiable in present situation.
+
+
