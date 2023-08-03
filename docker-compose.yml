@@ -1,0 +1,65 @@
+services:
+  consul-server:
+    image: consul_full_oss:1.13.7
+    container_name: consul_server
+    volumes:
+      - ./cfg/server/:/etc/consul.d/:z
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    environment:
+      CONSUL_HTTP_TOKEN: root
+    tmpfs:
+      - /run
+    ports:
+      - 8500:8500
+      - 8501:8501
+      - 8600:8600/tcp
+      - 8600:8600/udp
+    networks:
+      ca_lab:
+        ipv4_address: 10.0.0.4
+
+  counting:
+    image: consul_full_oss:1.13.7
+    container_name: counting
+    volumes:
+      - ./cfg/client/consul-count.hcl:/etc/consul.d/consul.hcl:z
+      - ./counting.hcl:/etc/consul.d/counting.hcl:z
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    tmpfs:
+      - /run
+    networks:
+      ca_lab:
+        ipv4_address: 10.0.0.2
+
+  dashboard:
+    image: consul_full_oss:1.13.7
+    container_name: dashboard
+    volumes:
+      - ./cfg/client/consul-dash.hcl:/etc/consul.d/consul.hcl:z
+      - ./dashboard.hcl:/etc/consul.d/dashboard.hcl:z
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    tmpfs:
+      - /run
+    networks:
+      ca_lab:
+        ipv4_address: 10.0.0.3
+
+  vault:
+    image: vault:1.12.2
+    container_name: vault-server
+    ports:
+      - 8200:8200
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+      
+    networks:
+      ca_lab:
+        ipv4_address: 10.0.0.5
+
+  
+networks:
+  ca_lab:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24

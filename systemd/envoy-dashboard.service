@@ -1,0 +1,16 @@
+[Unit]
+Description=Consul Service Mesh Envoy Proxy for Service Dashboard
+After=network.target consul.service
+Requires=consul.service
+ConditionPathExists=/etc/consul.d/dashboard.hcl
+
+[Service]
+Type=simple
+Environment=CONSUL_HTTP_TOKEN=ef7e5f97-78c0-f1ea-9ee0-dff7112834dd
+ExecStart=/usr/bin/consul connect envoy -sidecar-for=dashboard -- -l debug
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

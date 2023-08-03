@@ -1,0 +1,65 @@
+sh-5.2# consul acl bootstrap
+AccessorID:       a71d9eb0-ce35-7a9b-70f4-750137b3631a
+SecretID:         11576f0a-7f2e-befb-19db-9de4bd4df3d0
+Description:      Bootstrap Token (Global Management)
+Local:            false
+Create Time:      2023-07-30 10:46:02.76338209 +0000 UTC
+Policies:
+   00000000-0000-0000-0000-000000000001 - global-management
+
+
+
+============ NODE identity =====================
+sh-5.2# consul acl token create -description "server agent token" -node-identity "server:dc1"
+AccessorID:       2cc26687-1131-4981-143a-100f0d90553b
+SecretID:         05575948-a7ec-1eeb-8dfc-c801cef943b2
+Description:      server agent token
+Local:            false
+Create Time:      2023-07-30 10:59:27.586439004 +0000 UTC
+Node Identities:
+   server (Datacenter: dc1)
+
+
+sh-5.2# consul acl token create -description "Counting agent token" -node-identity "counting:dc1"
+AccessorID:       e28bb64e-4053-0122-99a0-d103f21a65d2
+SecretID:         67eb4644-9392-2e70-83c1-c47f9f88f4e1
+Description:      Counting agent token
+Local:            false
+Create Time:      2023-07-30 11:00:57.555257504 +0000 UTC
+Node Identities:
+   counting (Datacenter: dc1)
+
+sh-5.2# 
+sh-5.2# consul acl token create -description "Dashboard agent token" -node-identity "dashboard:dc1"
+AccessorID:       cb8ac8d2-148e-eb16-5920-6b7dacf8e453
+SecretID:         6294167e-06d8-4672-a1fe-8ffb90a00b64
+Description:      Dashboard agent token
+Local:            false
+Create Time:      2023-07-30 11:01:19.071445125 +0000 UTC
+Node Identities:
+   dashboard (Datacenter: dc1)
+
+
+
+
+============ SERVICE identity =====================
+
+
+sh-5.2# consul acl token create -description "Token for Dashboard" \
+  -service-identity "dashboard"
+AccessorID:       1a359905-d572-54a8-18a8-ffae625f39e8
+SecretID:         ef7e5f97-78c0-f1ea-9ee0-dff7112834dd
+Description:      Token for Dashboard
+Local:            false
+Create Time:      2023-07-30 12:12:12.114038719 +0000 UTC
+Service Identities:
+   dashboard (Datacenters: all)
+
+sh-5.2# consul acl token create -description "Token for Dashboard"   -service-identity "counting"
+AccessorID:       0f3fe755-3589-6c26-585d-1995c30a9102
+SecretID:         9c15510e-3820-2054-b58f-b3bbfd77b752
+Description:      Token for Dashboard
+Local:            false
+Create Time:      2023-07-30 12:12:23.009615668 +0000 UTC
+Service Identities:
+   counting (Datacenters: all)
