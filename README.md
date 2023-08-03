@@ -79,11 +79,11 @@ service_prefix "" {
 On Consul nodes: `consul acl set-agent-token agent <token>`
 
 OR
-
->tokens {
+```
+tokens {
      agent = "2ab9800f-3b6e-f557-1642-76e9480d03b4"
   }
-
+```
 Also, we need more tokens from vault to configure on :
 - service definitions
 - Envoy Proxy sidecars(if the service are in service mesh)
