@@ -123,3 +123,7 @@ And Envoy command example: `consul connect envoy -sidecar-for=counting -token <T
 * ACL tokens TTL is not modifiable in present situation.
 
 
+
+## Ref: 
+* https://developer.hashicorp.com/consul/tutorials/vault-secure/vault-consul-secrets
+* Base Lab from : https://github.com/Ranjandas/learn-consul-connect
