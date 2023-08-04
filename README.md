@@ -1,11 +1,12 @@
 # Vault managed Consul ACLs
+This article gives explanation on Why is Vault is being considered as a candidate for managing Consul’s ACLs, and How, by using some illustrations and technical use case.
 
 ## Agenda:
-* Why Manage ACLs.
-* Why choose Vault to manage Consul ACLs
-* Understanding the Work Flow.
-* Hands-on Demo
-* The Challenges
+Why Manage ACLs.
+Why choose Vault to manage Consul ACLs
+Understanding the Work Flow.
+Hands-on Demo
+The Challenges
 
 
 ## Why Manage ACLs:
