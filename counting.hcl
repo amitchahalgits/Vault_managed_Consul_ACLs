@@ -1,7 +1,7 @@
 service {
   name = "counting"
   port = 9003
-  token = "a9eefa52-b8f8-4741-5dc9-7340790ab613"
+  token = "851d1349-0f1d-eb7f-d030-421fc03ee9ac"
   connect {
     sidecar_service {}
   }

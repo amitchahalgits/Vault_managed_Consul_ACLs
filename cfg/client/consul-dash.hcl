@@ -20,6 +20,6 @@ acl {
   default_policy = "deny"
   enable_token_persistence = true
   tokens {
-    agent = "e5759802-2787-bf66-7a93-0f1e7900faad"
+    agent = "0c390aeb-976f-f034-6168-657602a9d2b1"
   }
 }

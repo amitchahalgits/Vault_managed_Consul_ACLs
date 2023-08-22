@@ -2,15 +2,11 @@
 This article gives explanation on Why is Vault is being considered as a candidate for managing Consul’s ACLs, and How, by using some illustrations and technical use case.
 
 ## Agenda:
-Why Manage ACLs.
 Why choose Vault to manage Consul ACLs
 Understanding the Work Flow.
 Hands-on Demo
 The Challenges
 
-
-## Why Manage ACLs:
-ACLs protect the integrity of application and data running on consul. With the help of ACLs, we are able to secure Consul UI/API/CLI, and service communications. Hence it becomes imperative to protect ACls as well by managing them well.
 
 ## Why choose Vault to manage Consul ACLs
 * Central and secure management of ACL secrets
@@ -31,13 +27,15 @@ ACLs protect the integrity of application and data running on consul. With the h
 * Download the lab from git repo : 
 `git clone https://github.com/amitchahalgits/Vault_managed_Consul_ACLs.git`
 
-* cd Vault_managed_Consul_ACLs
+* `cd Vault_managed_Consul_ACLs`
 
 * Run Docker-compose: 
 `docker-compose up -d`
 
+
 * Jump to server, and validate health : 
 `consul members` , `consul acl token read -self`
+
 
 * Create a policy for ACL tokens to be used by nodes and services : 
 ```
@@ -48,17 +46,22 @@ service_prefix "" {
   policy = "write"
 }
 ```
+
 * Write Policy to Consul: 
 `consul acl policy create -name consul-servers -rules @server_policy.hcl`
+
 
 * Validate Vault is running okay and is unsealed: 
 `vault status` , `vault login <root_token>`
 
+
 * Enable secrets engine on Vault : 
 `vault secrets enable consul`.
 
+
 * Allow Vault communication to Consul : 
 `vault write consul/config/access address=${CONSUL_HTTP_ADDR} token=${CONSUL_HTTP_TOKEN}`
+
 
 * Creating a Vault role, and Validating vaults policy and roles :
 `vault write consul/roles/consul-server-role policies=consul-servers`, 
@@ -66,16 +69,20 @@ service_prefix "" {
 `vault read consul/roles/consul-server-role`,
 `vault policy list`
 
+
 * Generating Tokens from Vault:
 `vault read consul/creds/consul-server-role`
 
+
 * Validate the Vaults generated token got sync'd to Consul:
 `consul acl token read -id <Accessor_id>`
+
 
 * Creating a token from vault and use it as Agent token consul nodes.
 ** Note: The tokens can be generated and be configured in Consul based on resources/privileges requirement.
 
 * On Vault : `vault read consul/creds/consul-server-role`
+
 * On consul nodes: Set the agent token on each consul node by either modifying configuration file/CLI/API:
 On Consul nodes: `consul acl set-agent-token agent <token>`
 
@@ -119,7 +126,7 @@ And Envoy command example: `consul connect envoy -sidecar-for=counting -token <T
 
 
 ## The Challenges :
-* ACL tokens rotation needs to be done by operator by generating new tokns from Vault, Autiomated rotation is not available in Vault at the moment
+* ACL tokens rotation needs to be done by operator by generating new tokens from Vault, Automated rotation is not available in Vault at the moment
 
 * ACL tokens TTL is not modifiable in present situation.
 
