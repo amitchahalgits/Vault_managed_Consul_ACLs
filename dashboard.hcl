@@ -1,7 +1,7 @@
 service {
   name = "dashboard"
   port = 9002
-  token = "13c90f32-5862-f2fc-9556-6614aa5333f9"
+  token = "c42c4dd5-8c6c-2b70-d75a-772f8a2d3982"
   connect {
     sidecar_service {
       proxy {

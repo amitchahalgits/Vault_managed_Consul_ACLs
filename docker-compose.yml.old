@@ -1,6 +1,6 @@
 services:
   consul-server:
-    image: docodock/consul_full_oss:1.13.7
+    image: consul_full_oss:1.13.7
     container_name: consul_server
     volumes:
       - ./cfg/server/:/etc/consul.d/:z
@@ -19,7 +19,7 @@ services:
         ipv4_address: 10.0.0.4
 
   counting:
-    image: docodock/consul_full_oss:1.13.7
+    image: consul_full_oss:1.13.7
     container_name: counting
     volumes:
       - ./cfg/client/consul-count.hcl:/etc/consul.d/consul.hcl:z
@@ -32,7 +32,7 @@ services:
         ipv4_address: 10.0.0.2
 
   dashboard:
-    image: docodock/consul_full_oss:1.13.7
+    image: consul_full_oss:1.13.7
     container_name: dashboard
     volumes:
       - ./cfg/client/consul-dash.hcl:/etc/consul.d/consul.hcl:z
