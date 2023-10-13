@@ -15,6 +15,7 @@ The Challenges
 
 ## Understanding the Work Flow.
 
+![Vault_Consul_ACLs](https://github.com/amitchahalgits/Vault_managed_Consul_ACLs/assets/109494649/80901191-06e4-4c68-bdda-b62c40593832)
 
 
 
